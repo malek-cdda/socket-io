@@ -20,11 +20,12 @@ io = new Server(server, {
 // Socket.io connection handling
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
+  // Join a conversation
   socket.on("join_room", (roomId) => {
     socket.join(roomId);
     console.log(`user with id-${socket.id} joined room - ${roomId}`);
   });
-
+  // recieve and send message here
   socket.on("send_msg", (data) => {
     console.log(data, "DATA");
     //This will send a message to a specific room ID
