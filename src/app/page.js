@@ -1,7 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import { io } from "socket.io-client";
-import styles from "./module.css";
+
 export default function Home() {
   const [showChat, setShowChat] = useState(false);
   const [userName, setUserName] = useState("");
@@ -9,7 +10,7 @@ export default function Home() {
   const [roomId, setroomId] = useState("");
 
   var socket;
-  socket = io("http://localhost:3001");
+  socket = io("http://localhost:5000");
 
   const handleJoin = () => {
     if (userName !== "" && roomId !== "") {
@@ -27,31 +28,24 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto">
-      <div
-        className={styles.main_div}
-        style={{ display: showChat ? "none" : "" }}
-      >
+    <div>
+      <div className="main_div" style={{ display: showChat ? "none" : "" }}>
         <input
-          className={styles.main_input}
+          className="main_input"
           type="text"
           placeholder="Username"
           onChange={(e) => setUserName(e.target.value)}
           disabled={showSpinner}
         />
         <input
-          className={styles.main_input}
+          className="main_input"
           type="text"
           placeholder="room id"
           onChange={(e) => setroomId(e.target.value)}
           disabled={showSpinner}
         />
-        <button className={styles.main_button} onClick={() => handleJoin()}>
-          {!showSpinner ? (
-            "Join"
-          ) : (
-            <div className={styles.loading_spinner}></div>
-          )}
+        <button className="main_button" onClick={() => handleJoin()}>
+          {!showSpinner ? "Join" : <div className="loading_spinner"></div>}
         </button>
       </div>
       <div style={{ display: !showChat ? "none" : "" }}>
@@ -89,8 +83,8 @@ const ChatPage = ({ socket, username, roomId }) => {
   }, [socket]);
 
   return (
-    <div className={styles.chat_div}>
-      <div className={styles.chat_border}>
+    <div className="chat_div">
+      <div className="chat_border">
         <div style={{ marginBottom: "1rem" }}>
           <p>
             Name: <b>{username}</b> and Room Id: <b>{roomId}</b>
@@ -101,15 +95,11 @@ const ChatPage = ({ socket, username, roomId }) => {
             <div
               key={key}
               className={
-                user == username
-                  ? styles.chatProfileRight
-                  : styles.chatProfileLeft
-              }
-            >
+                user == username ? "chatProfileRight" : "chatProfileLeft"
+              }>
               <span
-                className={styles.chatProfileSpan}
-                style={{ textAlign: user == username ? "right" : "left" }}
-              >
+                className="chatProfileSpan"
+                style={{ textAlign: user == username ? "right" : "left" }}>
                 {user.charAt(0)}
               </span>
               <h3 style={{ textAlign: user == username ? "right" : "left" }}>
@@ -121,13 +111,13 @@ const ChatPage = ({ socket, username, roomId }) => {
         <div>
           <form onSubmit={(e) => sendData(e)}>
             <input
-              className={styles.chat_input}
+              className="chat_input"
               type="text"
               value={currentMsg}
               placeholder="Type your message.."
               onChange={(e) => setCurrentMsg(e.target.value)}
             />
-            <button className={styles.chat_button}>Send</button>
+            <button className="chat_button">Send</button>
           </form>
         </div>
       </div>
