@@ -17,7 +17,7 @@ io = new Server(server, {
   },
 });
 
-// Socket.io connection handling
+// Socket.io connection handling code
 io.on("connection", (socket) => {
   console.log("A user connected:", socket.id);
   // Join a conversation
